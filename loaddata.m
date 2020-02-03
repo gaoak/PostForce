@@ -1,11 +1,12 @@
-function [file] = loaddata(filename)
+function [file] = loaddata(filename, nskip, nvars)
     global DIRNAME
     file.name = filename;
     
-    fp = fopen(strcat(DIRNAME, filename),'r');
-    head=fgetl(fp);head=fgetl(fp);head=fgetl(fp);head=fgetl(fp);fscanf(fp, '%s', 1);
-    sline = fgetl(fp);
-    for jj=1:7
+    fp = fopen(strcat(DIRNAME, filename), 'r');
+    for ii=1:1:nskip
+        sline=fgetl(fp);
+    end
+    for jj=1:nvars
         varName{jj} = sscanf(sline, '%s', 1);
     end
     
