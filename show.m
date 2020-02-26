@@ -1,11 +1,13 @@
-function show(filename, is)
+function file = show(filename, is, file)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 setPlotParameters;
 varname = {'t', 'fxp', 'fxv', 'fx', 'fyp', 'fyv', 'fy'};
-nskip = 5;
-nvars = 7;
-file = loaddata(filename, nskip, nvars);
+if nargin < 3
+    nskip = 5;
+    nvars = 7;
+    file = loaddata(filename, nskip, nvars);
+end
 
 figure;
 labels={};

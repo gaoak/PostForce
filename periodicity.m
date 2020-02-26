@@ -1,4 +1,4 @@
-function [dominantfrequency, meanv, maxv, minv, dominantamp, file] = showp(filename, col, Stime, file, Tper,mod)
+function [dominantfrequency, meanv, maxv, minv, dominantamp, file] = periodicity(filename, col, Stime, file, Tper,mod)
 % show fft
 %   [dominantfrequency, meanv, maxv, minv, dominantamp] = showp(filename, col, Stime, file)
 setPlotParameters;
@@ -34,5 +34,6 @@ maxv
 minv
 dominantamp
 dominantfrequency = (index(id)-1)/Tp
+
 end
 
