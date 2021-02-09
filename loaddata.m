@@ -20,8 +20,8 @@ function [file] = loaddata(filename, nskip, nvars)
     fdata = fdata';
     numStep = length(fdata);
     %% check time uniform
-    len4 = floor(numStep/4);
-    ctime = fdata(len4*[1:1:4], 1) - fdata(1+len4*[0:1:3],1);
+    len4 = floor(numStep/10);
+    ctime = fdata(len4*[1:1:10], 1) - fdata(1+len4*[0:1:9],1);
     maxv = max(ctime);
     minv = min(ctime);
     if(maxv-minv>minv*0.001)
@@ -30,7 +30,9 @@ function [file] = loaddata(filename, nskip, nvars)
     %%
     file.varName = varName;
     file.dt = (fdata(numStep, 1) - fdata(1, 1))/(numStep-1);
-    fdata(:,1) = [0:1:(numStep-1)]'*file.dt;
+    disp 'rescale time assuming uniform'
+    stime = fdata(1,1)
+    fdata(:,1) = stime + [0:1:(numStep-1)]'*file.dt;
     file.data = fdata;
 	fclose(fp);
 end
