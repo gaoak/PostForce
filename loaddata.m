@@ -1,5 +1,4 @@
 function [file] = loaddata(filename, nskip, nvars)
-% time should be uniform
     file.name = filename;
     
     fp = fopen(filename, 'r');
@@ -19,20 +18,8 @@ function [file] = loaddata(filename, nskip, nvars)
     end
     fdata = fdata';
     numStep = length(fdata);
-    %% check time uniform
-    len4 = floor(numStep/10);
-    ctime = fdata(len4*[1:1:10], 1) - fdata(1+len4*[0:1:9],1);
-    maxv = max(ctime);
-    minv = min(ctime);
-    if(maxv-minv>minv*0.001)
-        strcat('warning: time step changes in file', filename)
-    end
-    %%
     file.varName = varName;
     file.dt = (fdata(numStep, 1) - fdata(1, 1))/(numStep-1);
-    disp 'rescale time assuming uniform'
-    stime = fdata(1,1)
-    fdata(:,1) = stime + [0:1:(numStep-1)]'*file.dt;
     file.data = fdata;
 	fclose(fp);
 end
