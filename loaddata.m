@@ -1,4 +1,4 @@
-function [file] = loaddata(filename, nskip, nvars)
+function [file] = loaddata(filename, nskip, nvars, cond)
     file.name = filename;
     
     fp = fopen(filename, 'r');
@@ -11,9 +11,11 @@ function [file] = loaddata(filename, nskip, nvars)
     
     rflag = nvars;fdata = [];
     sline = fgetl(fp);
-    while length(sline)>(nvars*2-1)
+    while length(sline)>(nvars*2-1);
         [ftemp, rflag] = sscanf(sline, '%g', nvars);
-        fdata = [fdata, ftemp];
+        if nargin<4 || cond(ftemp);
+            fdata = [fdata, ftemp];
+        end
         sline = fgetl(fp);
     end
     fdata = fdata';
