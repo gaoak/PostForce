@@ -7,6 +7,7 @@ function [file] = loadequispacedtimeseries(filename, nskip, nvars)
     ctime = file.data(len4*[1:1:10], 1) - file.data(1+len4*[0:1:9],1);
     maxv = max(ctime);
     minv = min(ctime);
+    (maxv-minv)/minv
     if(maxv-minv>minv*0.001)
         strcat('warning: time step changes in file', filename)
     end
