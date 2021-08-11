@@ -1,0 +1,153 @@
+function [lambda, peakheight, secamp, zmin, loc, file2] = cleanvortexcore(file, aoa, zmin, zmax, thresh, var, mode)
+%trim vortex core data
+% first find the peak in height direction
+% loc is in wind frame, first valley starting from zmax to zmin
+% zmin is an update of zmin (last valley), should decrease monotonically
+z = file.data(:,3);
+if var>0
+    signal = file.data(:,var);
+else
+    signal = file.data(:,1)*cos(aoa) - file.data(:,2)*sin(aoa);
+end
+zstart = 1;
+zend = 1;
+for ii=1:1:length(z)
+    if z(ii)<zmin
+        zstart = ii;
+        break;
+    end
+end
+for ii=1:1:length(z)
+    if z(ii)<zmax
+        zend = ii;
+        break;
+    end
+end
+if zend<zstart
+    tmp = zstart;
+    zstart = zend;
+    zend = tmp;
+end
+index=[zstart:1:zend];
+y = signal(index);
+acme = findacme(y);
+thresh = min(thresh, autothresh(acme));
+while 1
+    [flag, acme] = trimacme(acme, thresh);
+    if flag==0
+        break;
+    end
+end
+end
+
+function acme = findacme(h)
+nsize = length(h);
+flag = 0;
+acme(1,1)=1;
+acme(1,2)=h(1);
+acount = 2;
+for ii=2:1:nsize-1
+    if h(ii) <= h(ii-1) && h(ii)<=h(ii+1) && (h(ii)<h(ii-1) || h(ii)<h(ii+1));
+        if flag==-1;
+            acme(acount-1, 1) = round((acme(acount-1, 1) + ii)/2);
+        else
+            acme(acount, 1) = ii;
+            acme(acount, 2) = h(ii);
+            acount = acount + 1;
+        end
+        flag = -1.;
+    end
+     if h(ii) >= h(ii-1) && h(ii)>=h(ii+1) && (h(ii)>h(ii-1) || h(ii)>h(ii+1));
+        if flag==1;
+            acme(acount-1, 1) = round((acme(acount-1, 1) + ii)/2);
+        else
+            acme(acount, 1) = ii;
+            acme(acount, 2) = h(ii);
+            acount = acount + 1;
+        end
+        flag = 1.;
+    end
+end
+if nsize>1;
+    acme(acount, 1) = nsize;
+    acme(acount, 2) = h(nsize);
+end
+end
+
+function thresh = autothresh(acme)
+nsize = length(acme);
+amp = abs(acme(2:nsize, 2) - acme(1:nsize-1, 2));
+[~, maxi] = max(amp);
+amp(maxi) = 0;
+thresh = max(amp);
+end
+
+function [flag, acme2] = trimacme(acme, thresh)
+nsize = length(acme);
+flag = 0;
+for ii=1:1:nsize-1
+    if abs(acme(ii+1,2) - acme(ii,2)) >= thresh;
+        sign = 1;
+        if acme(ii+1,2) < acme(ii, 2);
+            sign = -1;
+        end
+        if ii<=nsize-3 && abs(acme(ii+1,2)-acme(ii+2,2))<thresh;
+            if sign*acme(ii+3,2)>sign*acme(ii+1,2);
+                acme(ii+1,1) = -1;
+                acme(ii+2,1 ) =-1;
+            else
+                acme(ii+2,1) = -1;
+                acme(ii+3,1 ) =-1;
+            end
+            flag = 1;
+            break;
+        end
+        if ii >=3 && abs(acme(ii,2)-acme(ii-1,2))<thresh;
+            if sign*acme(ii-2,2)<sign*acme(ii,2);
+                acme(ii,1) = -1;
+                acme(ii-1,1 ) =-1;
+            else
+                acme(ii-1,1) = -1;
+                acme(ii-2,1 ) =-1;
+            end
+            flag = 1;
+            break;
+        end
+         if ii==nsize-2 && abs(acme(ii+1,2)-acme(ii+2,2))<thresh;
+            acme(ii+2,1 ) =-1;
+            flag = 1;
+            break;
+         end
+        if ii==2 && abs(acme(ii,2)-acme(ii-1,2)) < thresh;
+            acme(ii-1, 1) = -1;
+            flag = 1;
+            break
+        end
+    end
+end
+if flag==1
+    count = 1;
+    for ii=1:1:nsize
+        if acme(ii,1)>0;
+            acme2(count, :) = acme(ii, :);
+            count = count  + 1;
+        end
+    end
+else
+    acme2 = acme;
+end
+end
+
+function acme = adjustend(acme, y)
+if length(acme)==2
+    last = acme(2,1);
+    amp = abs(acme(1,2)-acme(2,2));
+    for ii=last:-1:2
+        if abs(y(ii)-y(ii-1)) > 5E-2*amp
+            acme(2,1) = ii;
+            acme(2,2) = y(ii);
+            break;
+        end
+    end
+end
+end

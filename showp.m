@@ -1,4 +1,4 @@
-function [dominantfrequency, meanv, maxv, minv, dominantamp, file] = showp(filename, col, Stime, file, Tper,mod)
+function [dominantfrequency, meanv, sigmamean, maxv, minv, dominantamp, file] = showp(filename, col, Stime, file, Tper,mod)
 % show fft
 %   [dominantfrequency, meanv, maxv, minv, dominantamp] = showp(filename, col, Stime, file)
 setPlotParameters;
@@ -13,15 +13,11 @@ if nargin>=6
 else
     mode = 0;
 end
-if nargin < 5
-    [meanv, maxv, minv, is, ie] = peak_mean(Stime, file, col, mode);
-else
-   [meanv, maxv, minv, is, ie] = period_mean(Stime, Tper, file, col, mode);
-end
+[meanv, sigmamean, maxv, minv, datastd, is, ie]= process_mean(Stime, Tper, file, col, mode);
 Tp = file.data(ie, 1) - file.data(is, 1);
 y = 1/(ie-is)*fft(file.data(is:(ie-1),col)-meanv);
 figure;
-index = (1:min(ceil(length(y)/2),100))';
+index = (1:min(ceil(length(y)/3), 500))';
 plot((index-1)/Tp, abs(y(index)),'.-');
 hold on;
 xlabel('frequency');

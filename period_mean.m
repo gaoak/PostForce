@@ -1,4 +1,4 @@
-function [meanv, sigmamean, maxv, minv, datastd, is, ie] = period_mean(Stime, period, file, column, mode)
+function [meanv, sigmamean, maxv, minv, datastd, is, ie, period]=period_mean (Stime, period, file, column, mode)
 % mean over integer number of periodics 
 %  [meanv, maxv, minv, is, ie] = peak_mean(Stime, file, column, tilstr)
 Ns = round((Stime-file.data(1,1))/file.dt)+1;
@@ -6,6 +6,7 @@ if Ns<1
     Ns = 1;
 end
 len = length(file.data(:,1));
+%
 nperiod = floor( (file.data(len,1) - file.data(Ns,1))/period );
 is = Ns;
 ie = is + round( nperiod*period/file.dt );
