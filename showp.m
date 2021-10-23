@@ -1,4 +1,4 @@
-function [dominantfrequency, meanv, sigmamean, maxv, minv, dominantamp, file] = showp(filename, col, Stime, file, Tper,mod)
+function [periodicity, dominantfrequency, meanv, sigmamean, maxv, minv, dominantamp, file] = showp(filename, col, Stime, file, Tper,mod)
 % show fft
 %   [dominantfrequency, meanv, maxv, minv, dominantamp] = showp(filename, col, Stime, file)
 setPlotParameters;
@@ -24,11 +24,21 @@ xlabel('frequency');
 ylabel('amplitude');
 title(varname{col});
 [dominantamp, id] = max(abs(y(index)));
+%% periodicity
+wavenumber = id - 1;
+totalwavenumbers = floor((length(y) - 1) / 2);
+np = floor(totalwavenumbers / wavenumber);
+perind = (1:1:np)*wavenumber + 1;
+total = sum(abs(y(1:1:totalwavenumbers)).^2);
+periodic = sum(abs(y(perind)).^2);
+periodicity = (total - periodic) / total
+%% output
 format long;
 meanv
 maxv
 minv
 dominantamp
+id
 dominantfrequency = (index(id)-1)/Tp
 end
 
