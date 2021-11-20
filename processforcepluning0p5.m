@@ -1,7 +1,7 @@
 %%
 % clear;
 %% parameters
-k=1.2;
+k=2.9;
 Amp = 0.5;
 forcefilename='force.dat';
 %% dependent parameters
@@ -34,14 +34,14 @@ hold on
 plot(t/Tper, Faddedx/Fref, 'r-')
 xlabel('t/T')
 ylabel('C_D')
-legend('total', 'added mass', 'Location', 'Best')
+% legend('total', 'added mass', 'Location', 'Best')
 figure
 plot(t/Tper, fy/Fref, 'b-')
 hold on
 plot(t/Tper, Faddedy/Fref, 'r-')
 xlabel('t/T')
 ylabel('C_L')
-legend('total', 'added mass', 'Location', 'Best')
+% legend('total', 'added mass', 'Location', 'Best')
 %% substract added mass force from the total force
 fxvor = fx - Faddedx;
 fyvor = fy - Faddedy;
