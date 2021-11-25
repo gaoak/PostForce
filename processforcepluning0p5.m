@@ -1,7 +1,7 @@
 %%
 % clear;
 %% parameters
-k=2.9;
+k=1.558;
 Amp = 0.5;
 forcefilename='force.dat';
 %% dependent parameters
@@ -81,13 +81,14 @@ saveas(gcf, strcat(num2str(k), 'CL_CD.png'))
 %% statistic data, can only run ontime
 file.data(:,4) = fxvor;
 file.data(:,7) = fyvor;
-[periodicity4, dominantfrequency4, meanv4, sigmamean4, maxv4, minv4, dominantamp] = showp(forcefilename, 4, Stime, file, Tper, mode)
+[periodicity4, totalenergy4, dominantfrequency4, meanv4, sigmamean4, maxv4, minv4, dominantamp] = showp(forcefilename, 4, Stime, file, Tper, mode)
 dragforce=[periodicity4, meanv4]
-[periodicity7, dominantfrequency7, meanv7, sigmamean7, maxv7, minv7, dominantamp] = showp(forcefilename, 7, Stime, file, Tper, mode)
+[periodicity7, totalenergy7, dominantfrequency7, meanv7, sigmamean7, maxv7, minv7, dominantamp] = showp(forcefilename, 7, Stime, file, Tper, mode)
 liftforce=[periodicity7, meanv7]
+periodicity = (periodicity4 * totalenergy4 + periodicity7 * totalenergy7) / (totalenergy4 + totalenergy7);
 result = [k Amp meanv4/Fref, sigmamean4/Fref, maxv4/Fref, minv4/Fref,...
                 meanv7/Fref, sigmamean7/Fref, maxv7/Fref, minv7/Fref,...
-    0.5*(periodicity4 + periodicity7), 0.5*(dominantfrequency4 + dominantfrequency7), ...
+    periodicity, 0.5*(dominantfrequency4 + dominantfrequency7), ...
     cxmin, cxmax, cymin, cymax]
 %%
 save('result.txt', 'result', '-ascii', '-double')
