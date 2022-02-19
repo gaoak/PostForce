@@ -1,9 +1,9 @@
 %%
 % clear;
 %% parameters
-aoa = 10/180.*pi;
-k=pi/2;
-Amp = 0.5;
+aoa = 15/180.*pi;
+k=1.3;
+Amp = 0.4;
 forcefilename='force.dat';
 %% dependent parameters
 Fref = 0.5;
@@ -22,6 +22,7 @@ t = file.data(:, 1);
 fx = file.data(:,4);
 fy = file.data(:,7);
 phaseIndex = getfileDividers(file, Tper, 4);
+numberperiod = floor((t(length(t))-t(1))/Tper)
 %% calculate added mass matrix
 basematrix = [0.0103755 0; 0 0.782023];
 direct= [cos(aoa) sin(aoa); -sin(aoa) cos(aoa)];
@@ -57,6 +58,8 @@ cymax = max(CY);
 cymin = min(CY);
 cxabsmax = max(cxmax, -cxmin);
 cyabsmax = max(cymax, -cymin);
+vortexforce = [t/Tper CX CY];
+save('vortexforce.dat', 'vortexforce', '-ascii', '-double')
 %% plot vortex force
 figure
 plot(t/Tper, file.data(:,4)/Fref, 'b-')

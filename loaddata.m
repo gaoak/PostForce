@@ -15,16 +15,25 @@ function [file] = loaddata(filename, nskip, nvars, cond)
     rflag = nvars;fdata = [];
     sline = fgetl(fp);
     while length(sline)>(nvars*2-1);
-        [ftemp, rflag] = sscanf(sline, '%g', nvars);
+        [ftemp, rflag] = mysscanf(sline, '%g', nvars);
         if nargin<4 || cond(ftemp);
             fdata = [fdata, ftemp];
         end
         sline = fgetl(fp);
     end
     fdata = fdata';
-    numStep = length(fdata);
+    numStep = length(fdata(:,1));
     file.varName = varName;
     file.dt = (fdata(numStep, 1) - fdata(1, 1))/(numStep-1);
     file.data = fdata;
 	fclose(fp);
+end
+
+function [data flag] = mysscanf(sline, format, nvars)
+for ii=1:1:length(sline)
+    if sline(ii)==','
+        sline(ii) = ' ' ;
+    end
+end
+[data flag] = sscanf(sline, format, nvars);
 end
