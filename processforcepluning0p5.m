@@ -2,8 +2,8 @@
 % clear;
 %% parameters
 aoa = 15/180.*pi;
-k=1.3;
-Amp = 0.4;
+k=0.3;
+Amp = 0.5;
 forcefilename='force.dat';
 %% dependent parameters
 Fref = 0.5;
