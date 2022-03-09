@@ -1,8 +1,9 @@
-function softedge(filename, pix, prefix)
+function softedge(filename, pix, prefix, format)
+filename
 fig = imread(filename);
 [nx, ny, nc ] = size(fig);
 if nargin==1 || length(pix)<4
-    pix = [0 3 0 3];
+    pix = [0 1 0 1];
 end
 for i=[1:1:pix(1)]
     for j=1:1:ny
@@ -35,4 +36,4 @@ end
 if nargin<3
     prefix = '';
 end
-imwrite(fig, strcat(prefix,filename), 'png')
+imwrite(fig, strcat(prefix,filename), format)
