@@ -1,7 +1,8 @@
 %%
 % clear;
 %% parameters
-k=1.558;
+aoa = 15/180.*pi;
+k=0.3;
 Amp = 0.5;
 forcefilename='force.dat';
 %% dependent parameters
@@ -21,13 +22,17 @@ t = file.data(:, 1);
 fx = file.data(:,4);
 fy = file.data(:,7);
 phaseIndex = getfileDividers(file, Tper, 4);
+numberperiod = floor((t(length(t))-t(1))/Tper)
+%% calculate added mass matrix
+basematrix = [0.0103755 0; 0 0.782023];
+direct= [cos(aoa) sin(aoa); -sin(aoa) cos(aoa)];
+addedmass = direct * basematrix * direct'
 %% calculate added mass force
 amp = 0.5 * Amp;
 omega = 2 * k;
 ay = -omega*omega*amp*cos(omega*t);
-addedmass = [0.192912    0.730332];
-Faddedy = -addedmass(2) * ay;
-Faddedx = -addedmass(1) * ay;
+Faddedy = -addedmass(2,2) * ay;
+Faddedx = -addedmass(2,1) * ay;
 figure
 plot(t/Tper, fx/Fref, 'b-')
 hold on
@@ -53,6 +58,8 @@ cymax = max(CY);
 cymin = min(CY);
 cxabsmax = max(cxmax, -cxmin);
 cyabsmax = max(cymax, -cymin);
+vortexforce = [t/Tper CX CY];
+save('vortexforce.dat', 'vortexforce', '-ascii', '-double')
 %% plot vortex force
 figure
 plot(t/Tper, file.data(:,4)/Fref, 'b-')
@@ -78,7 +85,7 @@ xlabel('C_D - added mass force')
 ylabel('C_L - added mass force')
 axis([-cxabsmax, cxabsmax, -cyabsmax, cyabsmax])
 saveas(gcf, strcat(num2str(k), 'CL_CD.png'))
-%% statistic data, can only run ontime
+%% statistic data, can only run onetime
 file.data(:,4) = fxvor;
 file.data(:,7) = fyvor;
 [periodicity4, totalenergy4, dominantfrequency4, meanv4, sigmamean4, maxv4, minv4, dominantamp] = showp(forcefilename, 4, Stime, file, Tper, mode)
