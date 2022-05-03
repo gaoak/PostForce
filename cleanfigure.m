@@ -2,6 +2,7 @@ function cleanfigure(pix, format)
 files = dir('./*.png');
 if nargin==0
     pix = [];
+    format = 'png';
 end
 if nargin==2
     files = dir(strcat('./*.',format));
