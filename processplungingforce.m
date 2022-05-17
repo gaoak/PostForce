@@ -71,6 +71,6 @@ dragforce=[periodicity4, meanv4]
 [periodicity7, totalenergy7, dominantfrequency7, meanv7, sigmamean7, maxv7, minv7, dominantamp] = showp(forcefilename, 7, Stime, file, Tper, mod)
 liftforce=[periodicity7, meanv7]
 result = [meanv4/Fref, sigmamean4/Fref, maxv4/Fref, minv4/Fref, meanv7/Fref, sigmamean7/Fref, maxv7/Fref, minv7/Fref,...
-    (periodicity4*totalenergy4 + periodicity7*totalenergy7)/(totalenergy4 + totalenergy7), 0.5*(dominantfrequency4 + dominantfrequency7)]
+    (periodicity4*totalenergy4 + periodicity7*totalenergy7)/(totalenergy4 + totalenergy7), min([dominantfrequency4, dominantfrequency7])]
 %%
 save('result.txt', 'result', '-ascii', '-double')
