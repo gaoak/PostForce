@@ -1,17 +1,16 @@
 %%
 % clear;
 %% parameters
-Amp = 0.1;
-sta = 1.75/pi
-k=sta*pi/Amp
+Amp = 0.0;
+k=pi;
 %% for static case only
-k=-1
-Amp=0
+%  k=-1
+%  Amp=0
 %%
 Fref = 0.5;
 Stime = 0;
-Tper = pi/k;
-mod = 1;
+Tper = -pi/k;
+mode = 1;
 %%
 % clc;
 close all;
@@ -66,11 +65,14 @@ xlabel('C_D')
 ylabel('C_L')
 saveas(gcf, 'CL_CD.png')
 %%
-[periodicity4, totalenergy4, dominantfrequency4, meanv4, sigmamean4, maxv4, minv4, dominantamp] = showp(forcefilename, 4, Stime, file, Tper, mod)
+[periodicity4, totalenergy4, dominantfrequency4, meanv4, sigmamean4, maxv4, minv4, dominantamp] = showp(forcefilename, 4, Stime, file, Tper, mode)
 dragforce=[periodicity4, meanv4]
-[periodicity7, totalenergy7, dominantfrequency7, meanv7, sigmamean7, maxv7, minv7, dominantamp] = showp(forcefilename, 7, Stime, file, Tper, mod)
+[periodicity7, totalenergy7, dominantfrequency7, meanv7, sigmamean7, maxv7, minv7, dominantamp] = showp(forcefilename, 7, Stime, file, Tper, mode)
 liftforce=[periodicity7, meanv7]
-result = [meanv4/Fref, sigmamean4/Fref, maxv4/Fref, minv4/Fref, meanv7/Fref, sigmamean7/Fref, maxv7/Fref, minv7/Fref,...
-    (periodicity4*totalenergy4 + periodicity7*totalenergy7)/(totalenergy4 + totalenergy7), min([dominantfrequency4, dominantfrequency7])]
+periodicity = (periodicity4 * totalenergy4 + periodicity7 * totalenergy7) / (totalenergy4 + totalenergy7);
+result = [k Amp meanv4/Fref, sigmamean4/Fref, maxv4/Fref, minv4/Fref,...
+                meanv7/Fref, sigmamean7/Fref, maxv7/Fref, minv7/Fref,...
+    periodicity, 0.5*(dominantfrequency4 + dominantfrequency7), ...
+    cxmin, cxmax, cymin, cymax]
 %%
 save('result.txt', 'result', '-ascii', '-double')
