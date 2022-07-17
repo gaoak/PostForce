@@ -1,12 +1,12 @@
 %% targeting dimensionless parameters
 clc
 amp=0.25; % amplitude (half peak-to-peak value)
-dt = 1/3000.; % dimensionless time step by period
+dt = 1/10000.; % dimensionless time step by period
 doutFlow = 1/8; %flow field output time interval per period
 doutInfo = 1/512;%flow infomation output time interval per period
-Shear = 1.; %dimensionless shear rate
+Shear = 0.5; %dimensionless shear rate
 %% values with dimension
-dtreal = 1/60. %mesh size
+dtreal = 1/100. %mesh size
 Lreal = 1.; %plate length
 %% parameters with dimension (used in the input file)
 %% for reference velocity 11, U_ref is the maximum plunging velocity
