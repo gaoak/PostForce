@@ -5,5 +5,5 @@ echo "${pngfilename}"
 if test -f ${pngfilename}; then
     echo "file ${pngfilename} already exists" | tee -a plotlog
 else
-    tec360 -b -p /home/agao/testcode/PostForce/plot.mcr 
+    tec360 -b -p /home/agao/testcode/PostForce/plot.mcr --osmesa 
 fi

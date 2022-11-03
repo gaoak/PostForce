@@ -1,9 +1,10 @@
 %%
 % clear;
 %% parameters
-forcefilename='K6.5.plt';
-Amp = 0.5;
-Tper = pi/2;
+forcefilename='force.dat';
+freq=0.666667;
+Tper = 1/freq;
+Amp = 0.3;
 %% dependent parameters
 Stime = 0;
 mode = 1;
@@ -22,3 +23,4 @@ result = [1/Tper Amp meanv4, sigmamean4, maxv4, minv4,...
     periodicity4, dominantfrequency4]
 %%
 save('result.txt', 'result', '-ascii', '-double')
+meanv4*2

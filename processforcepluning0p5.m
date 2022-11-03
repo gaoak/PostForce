@@ -2,7 +2,7 @@
 % clear;
 %% parameters
 aoa = 15/180.*pi;
-k=1;
+k=pi/2;
 Amp = 0.5;
 forcefilename='force.dat';
 %% dependent parameters
