@@ -1,4 +1,5 @@
 function [file] = loaddata(filename, nskip, nvars, cond)
+%cond is a function
     file.name = filename;
     
     fp = fopen(filename, 'r');
@@ -16,7 +17,7 @@ function [file] = loaddata(filename, nskip, nvars, cond)
     sline = fgetl(fp);
     while length(sline)>(nvars*2-1);
         [ftemp, rflag] = mysscanf(sline, '%g', nvars);
-        if nargin<4 || cond(ftemp);
+        if nargin<4 || cond(fdata, ftemp);
             fdata = [fdata, ftemp];
         end
         sline = fgetl(fp);

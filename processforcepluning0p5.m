@@ -2,7 +2,7 @@
 % clear;
 %% parameters
 aoa = 15/180.*pi;
-k=pi/2;
+k=1;
 Amp = 0.5;
 forcefilename='force.dat';
 %% dependent parameters
@@ -58,7 +58,8 @@ cymax = max(CY);
 cymin = min(CY);
 cxabsmax = max(cxmax, -cxmin);
 cyabsmax = max(cymax, -cymin);
-vortexforce = [t/Tper CX CY];
+Toffset = max([floor(t(length(t))/Tper) - 4, ceil(t(1)/Tper)]);
+vortexforce = [t/Tper-Toffset CX CY];
 save('vortexforce.dat', 'vortexforce', '-ascii', '-double')
 %% plot vortex force
 figure
