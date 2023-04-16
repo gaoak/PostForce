@@ -18,8 +18,17 @@ do
         echo "start running ${filename}"
         diff inFlow.dat ../../template/
         bash clean.sh
-        bash run.sh
-        sleep 1h
+        bash run.sh &
+        jobid=$!
+        for((t=0;t<10;++t))
+        do
+          sleep 6m
+          msg=`pmap ${jobid}`
+          if [ "$msg" = "" ]; then
+            break
+          fi
+        done
+        kill    $jobid
       fi
       cd ..
     fi
