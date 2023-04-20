@@ -1,6 +1,7 @@
 function [Fa] = ComputeAddedMass2D(Ua,DUa,theta,Omega,DOmega,massBody)
 %% auxi vars
-trans = [cos(theta) sin(theta); -sin(theta) cos(theta)];
+trans = [ cos(theta) sin(theta)
+         -sin(theta) cos(theta)];
 Ub = trans * Ua;
 DUb = trans * DUa;
 Ur  = [ Ub(1)  Ub(2)  Omega];
