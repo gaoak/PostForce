@@ -1,4 +1,4 @@
-function [acme] = findpeaks(y, thresh, mode)
+function [acme] = findpeaks(y, thresh, mode, strtitle)
 %trim vortex core data
 % first find the peak in height direction
 % loc is in wind frame, first valley starting from zmax to zmin
@@ -16,6 +16,8 @@ if nargin>=3 && mode>0
     plot(y);
     hold on
     plot(acme(:,1), acme(:,2),'or');
+    hold off;
+    title(strtitle);
 end
 end
 
