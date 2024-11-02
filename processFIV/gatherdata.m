@@ -1,4 +1,4 @@
-fname = 'AoA15M1.dat';
+fname = 'Static.dat';
 %% force and motion data
 data=[];
 for i3=1:length(freq)

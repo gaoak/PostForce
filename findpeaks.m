@@ -13,11 +13,19 @@ while 1
 end
 if nargin>=3 && mode>0
     figure;
-    plot(y);
+    x=(0:1:length(y)-1)*5.000000000000000e-04;
+    len1 = length(x);
+    dN = round(0.1 * len1);
+    plot(x,y,'k');
     hold on
-    plot(acme(:,1), acme(:,2),'or');
+    len = length(acme(:,1));
+    plot(x(acme(1:2:len,1)), acme(1:2:len,2),'or');
+    plot(x(acme(2:2:len,1)), acme(2:2:len,2),'ob');
     hold off;
     title(strtitle);
+    xlim([x(dN) x(len1-dN)])
+    xlabel('t')
+    ylabel('y')
 end
 end
 

@@ -8,7 +8,7 @@ end
 len = length(file.data(:,1));
 % find mean max value and mean min value [maxv] [minv]
 % ind is the index of peaks, not used here
-peaks = findpeaks(file.data(Ns:len,column), 1E6, mode, strcat(file.name, '_v', num2str(column)));
+peaks = findpeaks(file.data(Ns:len,column), 1E6, mode, strcat(file.name, ' v', num2str(column)));
 [is, ie, maxv, minv, nperiod, ind] = peak(peaks, Ns, 1);
 % reset period and Stime is needed
 % find Tper [Tper]

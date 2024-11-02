@@ -13,7 +13,7 @@ nskip = 1;
 nvars = 7;
 Fref=0.5;
 %%
-freq = [0:0.025:10];
+freq = [0.35 0.6];
 vars = {'AoA',  'Mass', 'fn', 'invfn',  'invTper', ...
         'ymean', 'yamp', 'fy', 'ystd', 'sigmaymean', ...
         'vmean', 'vamp', 'fv', 'vstd', 'sigmavmean', ...
@@ -23,11 +23,11 @@ for i3=1:length(freq)
     Tper = -1;
     f = freq(i3);
     if f < 0.3
-        Stime = 120;
+        Stime = 100;
     elseif f <= 0.4
         Stime = 100;
     else 
-        Stime = 80;
+        Stime = 100;
     end
     infname = strcat('motion', num2str(f), '.dat')
     outfname = strcat('mres', num2str(f), '.txt');
@@ -54,5 +54,9 @@ for i3=1:length(freq)
               meanv4/Fref   (maxv4 - minv4)/Fref dominantfrequency4 std4/Fref sigmamean4/Fref ...
               meanv7/Fref   (maxv7 - minv7)/Fref dominantfrequency7 std7/Fref sigmamean7/Fref];
     save(outfname, 'result', '-ascii', '-double')
-    close all;
+%     close all;
 end
+%%
+% result([16 21 7 5])
+% mean y, Amp y, f y; mean CL, Amp CL, f CL
+% result([6, 7, 8;21, 22, 23])
