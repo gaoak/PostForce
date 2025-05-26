@@ -17,6 +17,13 @@ rad1 = rad0 * 1.5;
 y2 = sqrt(abs(2 * rad1 * x - x.*x));
 index = [len:-1:1 2:1:len];
 points = [x(index) [y(len:-1:1);-y(2:1:len)] index'*0];
+%% aoa
+AoA = 15 / 180. * pi;
+rawp = points;
+points(:,1) = cos(AoA)*rawp(:,1) + sin(AoA)*rawp(:,2);
+points(:,2) =-sin(AoA)*rawp(:,1) + cos(AoA)*rawp(:,2);
+points(:,3) = 0.195195;
+%%
 figure;
 plot(points(:,1), points(:,2), '.-')
 hold on
@@ -26,3 +33,9 @@ plot(x, y2, '-g')
 axis([0 1 -0.5 0.5])
 pbaspect([1 1 1])
 save('naca0012.dat', 'points', '-ascii', '-double')
+%%
+fp = fopen('naca0012.txt', 'w');
+for ii=1:length(points(:,1))
+    fprintf(fp, '%f,%f,%f\n', points(ii, 1),points(ii, 2),points(ii, 3));
+end
+fclose(fp);

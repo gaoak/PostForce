@@ -6,7 +6,7 @@ function [file] = loaddata(filename, nskip, nvars, cond)
     for ii=1:1:nskip
         sline=fgetl(fp);
     end
-    varName={}
+    varName={};
     if nskip>0
         for jj=1:nvars
             varName{jj} = sscanf(sline, '%s', 1);

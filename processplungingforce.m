@@ -9,7 +9,7 @@ k=pi;
 %%
 Fref = 0.5;
 Stime = 0;
-Tper = -pi/k;
+Tper = -1;
 mode = 1;
 %%
 % clc;

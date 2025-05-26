@@ -23,8 +23,8 @@ file = loadequispacedtimeseries(infname, nskip, nvars);
 [periodicity5, totalenergy5, dominantfrequency5, meanv5, sigmamean5, maxv5, minv5, dominantamp5, std5] = showp(infname, 4, Stime, file, Tper, 1);
 saveas(gcf, strcat('TE.png'));
     
-tau = [meanv4 meanv5]/(8*pi);
-result  =[tau(1), sqrt(tau(1))/nu, tau(2), sqrt(tau(2))/nu]
+tau = meanv4 / (2*pi*pi);
+result  =[tau(1), sqrt(tau(1))/nu]
 save('meanfriction.txt', 'result', '-ascii', '-double')
 %%
 % result([16 21 7 5])

@@ -3,12 +3,12 @@
 %% parameters
 aoa = 15/180.*pi;
 k=1;
-Amp = 0.5;
+Amp = 0.0;
 forcefilename='force.dat';
 %% dependent parameters
 Fref = 0.5;
 Stime = 0;
-Tper = pi/k;
+Tper = -pi/k;
 mode = 1;
 StA = k*Amp/pi
 %% load data
