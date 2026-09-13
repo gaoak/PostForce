@@ -2,12 +2,13 @@
 % clear;
 %% parameters
 aoa = 15/180.*pi;
-k=1;
+k=2;
 Amp = 0.5;
-forcefilename='force.dat';
+forcefilename='DragLiftn.wing.fce';
+tipfilename='DragLiftn.tip.fce';
 %% dependent parameters
-Fref = 0.5;
-Stime = 0;
+Fref = 0.5 * 5;
+Stime = 65;
 Tper = pi/k;
 mode = 1;
 StA = k*Amp/pi
@@ -18,6 +19,8 @@ setPlotParameters;
 nskip = 5;
 nvars = 7;
 file = loadequispacedtimeseries(forcefilename, nskip, nvars);
+tipfile = loadequispacedtimeseries(tipfilename, nskip, nvars);
+file.data(:,2:1:7) = file.data(:,2:1:7) + tipfile.data(:,2:1:7);
 t = file.data(:, 1);
 fx = file.data(:,4);
 fy = file.data(:,7);
