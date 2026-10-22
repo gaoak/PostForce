@@ -3,7 +3,7 @@ clc;
 close all;
 clear;
 setPlotParameters;
-filename = {'wingforce.dat', 'tipforce.dat'};
+filename = {'DragLiftn.wing.fce', 'DragLiftn.tip.fce'};
 nskip = 0;
 nvars = 10;
 for ii=1:1:length(filename)
