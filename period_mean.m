@@ -7,7 +7,7 @@ if Ns<1
 end
 len = length(file.data(:,1));
 %
-nperiod = floor( (file.data(len,1) - file.data(Ns,1))/period );
+nperiod = floor( (file.data(len,1) - file.data(Ns,1))/period )
 is = Ns;
 ie = is + round( nperiod*period/file.dt );
 ind = is + round( [0:1:nperiod]'*period/file.dt );
