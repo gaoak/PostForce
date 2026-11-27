@@ -11,7 +11,7 @@ k=2;
 %%
 Fref = 0.5*5;
 Tper = pi/k;
-Stime = Tper*30;
+Stime = Tper*22;
 mode = 0;
 %%
 % clc;
@@ -30,6 +30,6 @@ fy = file.data(:,7);
     sigmamean7, maxv7, minv7, dominantamp, ~, ~, ~, nperiod] = ...
     showp(forcefilename, 7, Stime, file, Tper, mode);
 result = [meanv7/Fref, maxv7/Fref, minv7/Fref, sigmamean7/Fref, 3.*sigmamean7/Fref; ...
-    k, Amp, Stime/Tper, nperiod, 20261127 ]
+    nperiod, Stime/Tper, k, Amp, 0.20261127 ]
 %%
 save('result.txt', 'result', '-ascii', '-double');
