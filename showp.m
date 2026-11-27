@@ -1,4 +1,4 @@
-function [periodicity, totalenergy, dominantfrequency, meanv, sigmamean, maxv, minv, dominantamp, datastd, file, Tper] = showp(filename, col, Stime, file, Tper,mod)
+function [periodicity, totalenergy, dominantfrequency, meanv, sigmamean, maxv, minv, dominantamp, datastd, file, Tper,nperiod] = showp(filename, col, Stime, file, Tper,mod)
 % show fft
 %   [dominantfrequency, meanv, maxv, minv, dominantamp] = showp(filename, col, Stime, file)
 setPlotParameters;
@@ -13,7 +13,7 @@ if nargin>=6
 else
     mode = 0;
 end
-[meanv, sigmamean, maxv, minv, datastd, is, ie Tper]= process_mean(Stime, Tper, file, col, mode);
+[meanv, sigmamean, maxv, minv, datastd, is, ie Tper,nperiod]= process_mean(Stime, Tper, file, col, mode);
 %process frequency
 Tp = file.data(ie, 1) - file.data(is, 1);
 y = 1/(ie-is)*fft(file.data(is:(ie-1),col)-meanv);

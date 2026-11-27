@@ -1,4 +1,4 @@
-function [meanv, sigmamean, maxv, minv, datastd, is, ie, Tper] = process_mean(Stime, period, file, column, mode)
+function [meanv, sigmamean, maxv, minv, datastd, is, ie, Tper,nperiod] = process_mean(Stime, period, file, column, mode)
 % mean over integer number of periodics
 %  [meanv, maxv, minv, is, ie] = peak_mean(Stime, file, column, mode)
 Ns = round((Stime-file.data(1,1))/file.dt)+1;
@@ -24,7 +24,7 @@ if period <= 0
 end
 Tper = period;
 % using period do averaging [meanv], [sigmamean], [datastd], [is], [ie]
-[meanv, sigmamean, tmpmaxv, tmpminv, datastd, is, ie, tmpperiod] = period_mean(Stime, period, file, column, mode);
+[meanv, sigmamean, tmpmaxv, tmpminv, datastd, is, ie, tmpperiod, nperiod] = period_mean(Stime, period, file, column, mode);
 end
 
 function [is, ie, maxv, minv, Tcount, ind] = peak(acme, Ns, step)
