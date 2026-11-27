@@ -11,7 +11,7 @@ k=2;
 %%
 Fref = 0.5*5;
 Tper = pi/k;
-Stime = Tper*(41.5);
+Stime = Tper*41;
 mode = 1;
 %%
 % clc;
@@ -29,14 +29,11 @@ fy = file.data(:,7);
 [periodicity4, totalenergy4, dominantfrequency4, meanv4,...
     sigmamean4, maxv4, minv4, dominantamp] = ...
     showp(forcefilename, 4, Stime, file, Tper, mode);
-dragforce=[periodicity4, meanv4];
 [periodicity7, totalenergy7, dominantfrequency7, meanv7,...
     sigmamean7, maxv7, minv7, dominantamp] = ...
     showp(forcefilename, 7, Stime, file, Tper, mode);
-liftforce=[periodicity7, meanv7];
-periodicity = (periodicity4 * totalenergy4 + periodicity7 * totalenergy7) / (totalenergy4 + totalenergy7);
-result = [meanv4/Fref, maxv4, minv4, sigmamean4/Fref; ...
-    meanv7/Fref, maxv7, minv7, sigmamean7/Fref; ...
-    periodicity, k, Amp, Stime ]
+result = [meanv4/Fref, maxv4/Fref, minv4/Fref, sigmamean4/Fref; ...
+    meanv7/Fref, maxv7/Fref, minv7/Fref, sigmamean7/Fref; ...
+    k, Amp, Stime, 1. ]
 %%
 save('result.txt', 'result', '-ascii', '-double');
